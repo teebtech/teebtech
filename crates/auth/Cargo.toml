@@ -1,0 +1,20 @@
+[package]
+name = "auth"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+shared = { workspace = true }
+domain = { workspace = true }
+serde = { workspace = true, optional = true }
+thiserror = { workspace = true }
+bcrypt = { workspace = true, optional = true }
+jsonwebtoken = { workspace = true, optional = true }
+
+[features]
+default = ["serde", "bcrypt", "jsonwebtoken"]
+serde = ["dep:serde", "shared/serde", "domain/serde"]
+bcrypt = ["dep:bcrypt"]
+jsonwebtoken = ["dep:jsonwebtoken"]

@@ -1,0 +1,72 @@
+[package]
+name = "admin-app"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+leptos = { workspace = true }
+leptos_router = { workspace = true }
+axum = { workspace = true, optional = true }
+console_error_panic_hook = { workspace = true, optional = true }
+leptos_axum = { workspace = true, optional = true }
+leptos_meta = { workspace = true }
+tokio = { workspace = true, optional = true }
+wasm-bindgen = { workspace = true, optional = true }
+
+# Workspace packages (WASM-safe)
+design-system = { workspace = true }
+ui = { workspace = true }
+config = { workspace = true }
+
+# Workspace domain, application & security abstractions
+shared = { workspace = true }
+domain = { workspace = true }
+application = { workspace = true }
+auth = { workspace = true }
+authorization = { workspace = true }
+
+# Server-only secondary adapters
+infrastructure = { workspace = true, optional = true }
+database = { workspace = true, optional = true }
+
+[features]
+hydrate = [
+    "leptos/hydrate",
+    "dep:console_error_panic_hook",
+    "dep:wasm-bindgen",
+    "ui/hydrate",
+]
+ssr = [
+    "dep:axum",
+    "dep:tokio",
+    "dep:leptos_axum",
+    "dep:infrastructure",
+    "dep:database",
+    "leptos/ssr",
+    "leptos_meta/ssr",
+    "leptos_router/ssr",
+    "ui/ssr",
+    "config/server",
+]
+
+[package.metadata.leptos]
+output-name = "admin"
+site-root = "target/site/admin"
+site-pkg-dir = "pkg"
+tailwind-input-file = "style/tailwind.css"
+tailwind-config-file = "tailwind.config.js"
+assets-dir = "public"
+site-addr = "127.0.0.1:3004"
+reload-port = 3005
+browserquery = "defaults"
+env = "DEV"
+bin-features = ["ssr"]
+bin-default-features = false
+lib-features = ["hydrate"]
+lib-default-features = false
+lib-profile-release = "wasm-release"

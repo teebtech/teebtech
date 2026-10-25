@@ -1,0 +1,23 @@
+[package]
+name = "database"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+shared = { workspace = true }
+domain = { workspace = true }
+application = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true, optional = true }
+sqlx = { workspace = true, optional = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
+
+[features]
+default = ["tracing", "sqlx"]
+tracing = ["dep:tracing", "shared/tracing"]
+sqlx = ["dep:sqlx"]

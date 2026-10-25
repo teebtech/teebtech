@@ -1,0 +1,30 @@
+[package]
+name = "ui"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+leptos = { workspace = true }
+leptos_meta = { workspace = true }
+leptos_router = { workspace = true }
+design-system = { workspace = true }
+web-sys = { version = "0.3", optional = true }
+
+[features]
+hydrate = [
+    "leptos/hydrate",
+    "dep:web-sys",
+    "web-sys/Window",
+    "web-sys/KeyboardEvent",
+    "web-sys/Document",
+    "web-sys/HtmlDocument",
+    "web-sys/Element",
+    "web-sys/HtmlElement",
+]
+ssr = [
+    "leptos/ssr",
+    "leptos_meta/ssr",
+    "leptos_router/ssr",
+]

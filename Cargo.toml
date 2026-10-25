@@ -1,0 +1,70 @@
+[workspace]
+resolver = "2"
+members = [
+    "apps/home",
+    "apps/client",
+    "apps/admin",
+    "crates/domain",
+    "crates/application",
+    "crates/infrastructure",
+    "crates/auth",
+    "crates/authorization",
+    "crates/database",
+    "crates/shared",
+    "packages/ui",
+    "packages/design-system",
+    "packages/config",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["TeebTech Team"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/teeb-tech/teeb-tech"
+
+[workspace.dependencies]
+# Leptos & Web Framework
+leptos = { version = "0.8.20" }
+leptos_router = { version = "0.8.15" }
+leptos_meta = { version = "0.8.6" }
+leptos_axum = { version = "0.8.10" }
+axum = { version = "0.8.9" }
+tokio = { version = "1.53.1", features = ["rt-multi-thread"] }
+wasm-bindgen = { version = "0.2.127" }
+console_error_panic_hook = { version = "0.1.7" }
+
+# Serialization, Config & Utilities
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.151" }
+thiserror = { version = "2.0.20" }
+tracing = { version = "0.1.44" }
+cfg-if = { version = "1.0.4" }
+dotenvy = { version = "0.15" }
+bcrypt = { version = "0.15" }
+jsonwebtoken = { version = "9.3" }
+
+# Database & Persistence (Server Only)
+sqlx = { version = "0.8.3", default-features = false, features = ["runtime-tokio-rustls", "postgres", "macros", "migrate"] }
+
+# Workspace Crates (Domain & Backend)
+domain = { path = "crates/domain" }
+application = { path = "crates/application" }
+infrastructure = { path = "crates/infrastructure" }
+auth = { path = "crates/auth" }
+authorization = { path = "crates/authorization" }
+database = { path = "crates/database" }
+shared = { path = "crates/shared" }
+
+# Workspace Packages (Frontend & Shared)
+ui = { path = "packages/ui" }
+design-system = { path = "packages/design-system" }
+config = { path = "packages/config" }
+
+# Size-optimized profile for the WASM bundles in release mode
+[profile.wasm-release]
+inherits = "release"
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = "abort"

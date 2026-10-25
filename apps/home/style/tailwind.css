@@ -1,0 +1,282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    background-color: #f8fafc;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #0f172a;
+    background-color: #f8fafc;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+  }
+
+  /* Prevent overscroll bounce and chaining on all scrollable modal/dialog and drawer containers */
+  dialog,
+  [role="dialog"],
+  .overflow-y-auto,
+  .overflow-x-auto,
+  .overflow-auto {
+    overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
+  }
+
+  .font-display {
+    font-family: 'Fraunces', Georgia, serif;
+  }
+
+  [dir="rtl"],
+  [dir="rtl"] body {
+    font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  [dir="rtl"] .font-display {
+    font-family: 'Cairo', 'Fraunces', Georgia, serif;
+    font-weight: 700;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  :focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 100px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Hero dot grid background ─────────────────────────────────────────────── */
+.hero-grid {
+  background-color: #0b1220;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+/* ── Interactive 3D Hero ─────────────────────────────────────────────────── */
+.hero-stage-dots {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.32) 1.25px, transparent 1.35px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 80% 70% at 65% 40%, #000 25%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 65% 40%, #000 25%, transparent 80%);
+}
+
+.hero-cq {
+  container-type: inline-size;
+  perspective: 1500px;
+}
+
+.hero-float {
+  animation: hero-fl 8s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+@keyframes hero-fl {
+  50% { transform: translateY(-10px); }
+}
+
+.hero-tilt {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.2s ease-out;
+}
+
+.hero-dv {
+  position: absolute;
+  transform-style: preserve-3d;
+  opacity: var(--o, 1);
+  transform: translateZ(calc(var(--z, 0px) + var(--lift, 0px))) translateY(var(--y, 0px)) scale(var(--s, 1));
+  transition: transform 0.7s cubic-bezier(0.2, 1.2, 0.3, 1), opacity 0.5s;
+}
+
+.hero-dv[data-off] {
+  --s: 0.55;
+  --y: 5cqw;
+  --o: 0;
+  pointer-events: none;
+}
+
+.hero-dv.on {
+  --lift: 34px;
+}
+
+.hero-dv > .hero-in {
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  overflow: hidden;
+  font-size: 2.1cqw;
+  line-height: 1.3;
+  box-shadow: 0 3cqw 5cqw -2cqw rgba(15, 23, 42, 0.16), 0 1cqw 2cqw -1cqw rgba(37, 99, 235, 0.08);
+  transition: outline-color 0.3s, box-shadow 0.3s;
+  outline: 0.45cqw solid transparent;
+}
+
+.hero-dv.on > .hero-in {
+  outline-color: #3b82f6;
+  box-shadow: 0 3cqw 6cqw -1.5cqw rgba(37, 99, 235, 0.28), 0 0 0 1px #3b82f6;
+}
+
+.hero-shim {
+  background: linear-gradient(90deg, rgba(226, 232, 240, 0.9), transparent, rgba(226, 232, 240, 0.9));
+  background-size: 200% 100%;
+  animation: hero-sh 2.4s linear infinite;
+}
+@keyframes hero-sh {
+  to { background-position: -200% 0; }
+}
+
+.hero-bar {
+  transform-origin: bottom;
+  animation: hero-gr 3.2s ease-in-out infinite;
+}
+@keyframes hero-gr {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+.hero-row {
+  animation: hero-rw 5s ease-in-out infinite both;
+}
+@keyframes hero-rw {
+  0% { opacity: 0; transform: translateX(3cqw); }
+  14%, 86% { opacity: 1; transform: none; }
+  100% { opacity: 0; }
+}
+
+.hero-ld {
+  height: 0.5cqw;
+  background: #2563eb;
+  transform-origin: left;
+  animation: hero-ld 3.6s ease-in-out infinite;
+}
+@keyframes hero-ld {
+  0% { transform: scaleX(0); }
+  70%, 100% { transform: scaleX(1); }
+}
+
+.hero-fab {
+  position: relative;
+}
+.hero-fab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #2563eb;
+  animation: hero-pl 2s ease-out infinite;
+}
+@keyframes hero-pl {
+  to { transform: scale(1.9); opacity: 0; }
+}
+
+.hero-ty {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: hero-ty 7s steps(26) infinite;
+}
+@keyframes hero-ty {
+  0% { width: 0; }
+  25%, 88% { width: 100%; }
+  100% { width: 0; }
+}
+
+.hero-chip {
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.hero-chip:active {
+  transform: scale(0.96);
+}
+.hero-chip[aria-pressed="true"] {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  font-weight: 700;
+}
+
+.hero-rise {
+  animation: hero-rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(22px); }
+}
+
+/* ── Animated shimmer for skeleton ────────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── Toast slide in ───────────────────────────────────────────────────────── */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.toast-enter {
+  animation: slideInRight 0.25s ease-out;
+}
+
+/* ── Custom checkbox ──────────────────────────────────────────────────────── */
+input[type="checkbox"] {
+  accent-color: #2563eb;
+}
+
+/* ── Select arrow ─────────────────────────────────────────────────────────── */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 32px;
+}
+
+/* ── Reduced Motion ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Viewport Height Normalization ────────────────────────────────────────── */
+@supports (min-height: 100dvh) {
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+}
+

@@ -1,0 +1,22 @@
+[package]
+name = "application"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+shared = { workspace = true }
+domain = { workspace = true }
+auth = { workspace = true }
+serde = { workspace = true, optional = true }
+thiserror = { workspace = true }
+tracing = { workspace = true, optional = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
+
+[features]
+default = ["serde", "tracing"]
+serde = ["dep:serde", "shared/serde", "domain/serde", "auth/serde"]
+tracing = ["dep:tracing", "shared/tracing"]
